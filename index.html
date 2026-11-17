@@ -2,182 +2,336 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101114">
 <title>MrBon AI — MrBon StudioX</title>
-<link rel="icon" type="image/png" href="favicon.png">
+<link rel="icon" href="favicon.png">
 
 <style>
 :root{
-  --bg:#d9d9d9;
-  --panel:#f2f2f2;
-  --ink:#111;
-  --grey:#6b6b6b;
-  --yellow:#fff700;
-  --bot:#fff;
-  color-scheme:light;
+  color-scheme:dark;
+  --bg:#101114;
+  --panel:#181a20;
+  --panel2:#20232b;
+  --border:#30333d;
+  --text:#f5f5f7;
+  --muted:#969ba8;
+  --accent:#fff000;
+  --accentText:#111;
+  --bot:#1b1e25;
+  --user:#30333d;
+  --danger:#ff6868;
+  --radius:17px;
 }
-@media(prefers-color-scheme:dark){
-  :root{
-    --bg:#2b2b2b;
-    --panel:#3a3a3a;
-    --ink:#f4f4f4;
-    --grey:#b0b0b0;
-    --bot:#4a4a4a;
-    color-scheme:dark;
-  }
+body.light{
+  color-scheme:light;
+  --bg:#f5f5f7;
+  --panel:#fff;
+  --panel2:#eceef2;
+  --border:#dedfe5;
+  --text:#17181c;
+  --muted:#707582;
+  --bot:#fff;
+  --user:#e8e9ed;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html,body{height:100%;margin:0}
 body{
   background:var(--bg);
-  color:var(--ink);
-  font:16px/1.5 "Trebuchet MS",system-ui,sans-serif;
-  display:flex;
-  flex-direction:column;
-  padding-top:env(safe-area-inset-top,0px);
-  padding-bottom:env(safe-area-inset-bottom,0px)
+  color:var(--text);
+  font:15px/1.55 Inter,system-ui,-apple-system,sans-serif;
 }
-[hidden]{display:none!important}
-button{
-  font:inherit;
-  font-weight:700;
-  background:var(--yellow);
-  color:#000;
-  border:2px solid #000;
-  border-radius:12px;
-  padding:8px 14px;
-  cursor:pointer
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:3px
 }
-button:disabled{opacity:.5}
-:focus-visible{outline:3px solid #000;outline-offset:2px}
-
 #login{
-  flex:1;
+  min-height:100%;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  gap:14px;
-  padding:24px;
-  text-align:center
+  padding:25px;
+  text-align:center;
+  gap:16px
 }
-#login img{width:min(55vw,240px);height:auto}
-#login h1{margin:0;font-size:1.7rem}
-#login p{margin:0;max-width:34ch;color:var(--grey)}
-#gbtn{
+#login img{width:125px;height:125px;object-fit:contain}
+#login h1{font-size:32px;margin:0}
+#login p{color:var(--muted);max-width:340px;margin:0}
+.primary{
+  background:var(--accent);
+  color:#111;
+  border:0;
+  border-radius:12px;
+  padding:12px 19px;
+  font-weight:800
+}
+.google{
   display:flex;
   align-items:center;
   gap:10px;
+  background:white;
+  color:#111;
+  border:0;
+  border-radius:12px;
   padding:12px 20px;
-  background:#fff;
-  box-shadow:3px 3px 0 #000
+  font-weight:700
 }
-#msgerr{
-  color:#b00020;
-  font-size:.9rem;
-  max-width:36ch;
-  overflow-wrap:anywhere
-}
+#loginError{color:var(--danger);max-width:360px;overflow-wrap:anywhere}
 
 #app{
-  flex:1;
+  display:flex;
+  height:100dvh;
+  min-height:0;
+  overflow:hidden
+}
+.sidebar{
+  width:255px;
+  flex:none;
+  background:var(--panel);
+  border-right:1px solid var(--border);
+  padding:18px 13px;
   display:flex;
   flex-direction:column;
-  min-height:0
+  gap:17px
 }
-header{
+.brand{
   display:flex;
   align-items:center;
-  gap:10px;
-  padding:8px 14px;
-  background:var(--panel);
-  border-bottom:3px solid #000
+  gap:11px;
+  padding:4px 7px
 }
-header img{width:44px;height:44px;flex:none}
-header h1{font-size:1.15rem;margin:0;line-height:1.1}
-header small{
-  color:var(--grey);
-  display:block;
-  max-width:22ch;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap
+.brand img{width:40px;height:40px;object-fit:contain}
+.brand strong{font-size:19px}
+.brand small{display:block;color:var(--muted);font-size:11px}
+.newchat{
+  width:100%;
+  background:var(--panel2);
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:11px;
+  text-align:left;
+  font-weight:700
 }
-header .sp{flex:1}
-header button{padding:6px 10px;font-size:.85rem}
-
-#log{
+.side-title{
+  color:var(--muted);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  padding:5px 8px
+}
+.side-info{
+  padding:12px;
+  color:var(--muted);
+  font-size:13px;
+  border:1px solid var(--border);
+  border-radius:12px
+}
+.side-bottom{margin-top:auto;display:grid;gap:8px}
+.side-bottom button{
+  background:transparent;
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:10px;
+  text-align:left
+}
+.main{
+  min-width:0;
   flex:1;
-  overflow-y:auto;
-  padding:14px;
   display:flex;
   flex-direction:column;
-  gap:10px
+  height:100%;
+  position:relative
 }
-.msg{
-  max-width:min(85%,640px);
-  padding:10px 14px;
-  border:2px solid #000;
-  border-radius:16px;
-  white-space:pre-wrap;
-  overflow-wrap:anywhere
-}
-.me{
-  align-self:flex-end;
-  background:var(--yellow);
-  color:#000;
-  border-bottom-right-radius:4px
-}
-.bot{
-  align-self:flex-start;
-  background:var(--bot);
-  border-bottom-left-radius:4px
-}
-.err{border-style:dashed}
-
-form{
+.topbar{
+  min-height:70px;
   display:flex;
-  gap:8px;
-  padding:10px 14px;
-  background:var(--panel);
-  border-top:3px solid #000
+  align-items:center;
+  gap:12px;
+  padding:12px 22px;
+  border-bottom:1px solid var(--border);
+  background:var(--panel)
 }
-textarea{
-  flex:1;
-  resize:none;
-  font:inherit;
-  color:inherit;
-  background:var(--bg);
-  border:2px solid #000;
-  border-radius:12px;
+.topbar h2{font-size:17px;margin:0}
+.topbar small{display:block;color:var(--muted);font-size:12px}
+.spacer{flex:1}
+.iconbtn{
+  background:var(--panel2);
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:9px 12px
+}
+.provider-select{
+  min-width:145px;
+  background:var(--panel2);
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:11px;
   padding:10px;
-  max-height:120px;
-  min-width:0
+  font-weight:700
+}
+#log{
+  flex:1;
+  min-height:0;
+  overflow-y:auto;
+  padding:28px max(18px,calc((100% - 820px)/2));
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  scroll-behavior:smooth
+}
+.welcome{
+  margin:auto;
+  text-align:center;
+  max-width:520px;
+  padding:25px 10px
+}
+.welcome img{width:85px;height:85px;object-fit:contain}
+.welcome h2{font-size:27px;margin:10px 0 5px}
+.welcome p{color:var(--muted);margin:0}
+.msg-row{display:flex;gap:11px;align-items:flex-start}
+.msg-row.user{flex-direction:row-reverse}
+.avatar{
+  width:34px;height:34px;flex:none;
+  border-radius:11px;
+  background:var(--panel2);
+  display:grid;place-items:center;
+  font-weight:900;
+  color:var(--accent)
+}
+.msg-content{min-width:0;max-width:min(85%,700px)}
+.bubble{
+  padding:13px 16px;
+  border:1px solid var(--border);
+  border-radius:15px;
+  background:var(--bot);
+  overflow-wrap:anywhere;
+  white-space:pre-wrap
+}
+.user .bubble{
+  background:var(--user);
+  border-color:transparent
+}
+.msg-meta{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  margin:5px 4px;
+  color:var(--muted);
+  font-size:11px
+}
+.copybtn{
+  background:transparent;
+  border:0;
+  color:var(--muted);
+  font-size:11px;
+  padding:2px 4px
+}
+.error .bubble{border-color:var(--danger);color:var(--danger)}
+.typing{color:var(--muted);font-size:13px;padding:10px}
+.composer-area{
+  padding:12px 18px max(16px,env(safe-area-inset-bottom));
+  background:var(--bg)
+}
+.composer{
+  max-width:850px;
+  margin:auto;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:10px;
+  display:flex;
+  align-items:flex-end;
+  gap:10px;
+  box-shadow:0 8px 35px #0002
+}
+#input{
+  flex:1;
+  min-width:0;
+  max-height:180px;
+  resize:none;
+  background:transparent;
+  color:var(--text);
+  border:0;
+  outline:none;
+  padding:9px;
+  line-height:1.5
+}
+#input:focus{outline:none}
+#send{
+  background:var(--accent);
+  color:#111;
+  border:0;
+  border-radius:12px;
+  padding:10px 15px;
+  font-weight:800
+}
+.hint{
+  text-align:center;
+  color:var(--muted);
+  font-size:11px;
+  padding-top:9px
+}
+.status{
+  color:var(--muted);
+  font-size:12px
 }
 dialog{
-  border:3px solid #000;
-  border-radius:16px;
+  width:min(470px,calc(100% - 28px));
+  max-height:85dvh;
+  overflow:auto;
   background:var(--panel);
-  color:var(--ink);
-  max-width:420px;
-  width:92%
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:22px;
+  box-shadow:0 20px 80px #0008
 }
-dialog input{
+dialog::backdrop{background:#0009;backdrop-filter:blur(5px)}
+dialog h2{margin:0 0 7px}
+.dialog-sub{color:var(--muted);font-size:13px;margin:0 0 18px}
+.key-group{margin:17px 0}
+.key-group label{display:block;font-weight:700;margin-bottom:7px}
+.key-group input{
   width:100%;
-  font:inherit;
-  padding:10px;
-  border:2px solid #000;
+  background:var(--bg);
+  color:var(--text);
+  border:1px solid var(--border);
   border-radius:10px;
-  margin:8px 0
+  padding:12px
 }
-dialog p{margin:6px 0;font-size:.9rem}
+.dialog-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}
+.secondary{
+  background:var(--panel2);
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:11px;
+  padding:10px 14px
+}
+.dialog-actions .primary{flex:1}
+#settingsStatus{font-size:12px;color:var(--muted);margin-top:12px}
+#mobileMenu{display:none}
 
-@media(max-width:480px){
-  header{gap:6px;padding:8px}
-  header button{padding:6px;font-size:.75rem}
-  header img{width:36px;height:36px}
-  form{padding:8px}
+@media(max-width:720px){
+  .sidebar{display:none}
+  .topbar{padding:10px 12px;min-height:62px;gap:7px}
+  .topbar h2{font-size:15px}
+  .provider-select{min-width:0;max-width:135px;padding:9px 6px;font-size:12px}
+  .topbar .iconbtn{padding:8px;font-size:12px}
+  #log{padding:18px 12px}
+  .msg-content{max-width:88%}
+  .composer-area{padding:8px 9px max(10px,env(safe-area-inset-bottom))}
+  #input{font-size:16px}
+  #send{padding:10px 12px}
+  #mobileMenu{display:block}
 }
 </style>
 </head>
@@ -187,10 +341,9 @@ dialog p{margin:6px 0;font-size:.9rem}
 <section id="login">
   <img src="logo.png" alt="MrBon AI">
   <h1>MrBon AI</h1>
-  <p>Войди через Google, чтобы общаться с ИИ. Твои чаты сохранятся в аккаунте.</p>
-
-  <button id="gbtn" type="button">
-    <svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true">
+  <p>Три искусственных интеллекта. Один чат. Выбирай своего помощника.</p>
+  <button class="google" id="gbtn" type="button">
+    <svg width="21" height="21" viewBox="0 0 48 48">
       <path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/>
       <path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.6 5.9c4.5-4.1 7-10.2 7-17.6z"/>
       <path fill="#FBBC05" d="M10.5 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7l-7.9-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.9-6.1z"/>
@@ -198,63 +351,101 @@ dialog p{margin:6px 0;font-size:.9rem}
     </svg>
     Войти через Google
   </button>
-
-  <div id="msgerr" role="alert"></div>
+  <div id="loginError" role="alert"></div>
 </section>
 
 <section id="app" hidden>
-  <header>
-    <img src="logo.png" alt="">
-    <div>
-      <h1>MrBon AI</h1>
-      <small id="who"></small>
+  <aside class="sidebar">
+    <div class="brand">
+      <img src="logo.png" alt="">
+      <div><strong>MrBon AI</strong><small>MrBon StudioX</small></div>
     </div>
-    <span class="sp"></span>
-    <button type="button" id="settings">Ключ</button>
-    <button type="button" id="clear">Очистить</button>
-    <button type="button" id="out">Выйти</button>
-  </header>
+    <button class="newchat" id="newChat">＋ Новый разговор</button>
+    <div class="side-title">Текущий разговор</div>
+    <div class="side-info">
+      История сохраняется в твоём Google-аккаунте. Ты можешь переключать ИИ прямо в этом разговоре.
+    </div>
+    <div class="side-bottom">
+      <button id="sideSettings">⚙ Настройки API</button>
+      <button id="theme">◐ Сменить тему</button>
+      <button id="sideOut">↪ Выйти из аккаунта</button>
+    </div>
+  </aside>
 
-  <main id="log" aria-live="polite"></main>
+  <main class="main">
+    <header class="topbar">
+      <button class="iconbtn" id="mobileMenu" title="Настройки">☰</button>
+      <div>
+        <h2>Новый разговор</h2>
+        <small id="who">MrBon AI</small>
+      </div>
+      <span class="spacer"></span>
+      <select id="providerSelect" class="provider-select" aria-label="Выбрать ИИ">
+        <option value="gemini">✦ Gemini</option>
+        <option value="claude">✳ Claude</option>
+        <option value="openai">◎ ChatGPT</option>
+      </select>
+      <button class="iconbtn" id="settings">API Keys</button>
+      <button class="iconbtn" id="clear" title="Очистить историю">⌫</button>
+    </header>
 
-  <form id="form">
-    <textarea id="input" rows="1" placeholder="Напиши сообщение MrBon AI…" aria-label="Сообщение"></textarea>
-    <button id="send" type="submit">Отправить</button>
-  </form>
+    <main id="log" aria-live="polite">
+      <div class="welcome" id="welcome">
+        <img src="logo.png" alt="">
+        <h2>Привет! Я MrBon AI.</h2>
+        <p>Выбери Gemini, Claude или ChatGPT и начни разговор.</p>
+      </div>
+    </main>
+
+    <div class="composer-area">
+      <form class="composer" id="form">
+        <textarea id="input" rows="1" placeholder="Напиши сообщение..." aria-label="Сообщение"></textarea>
+        <button id="send" type="submit">➤</button>
+      </form>
+      <div class="hint">MrBon AI может ошибаться. Проверяй важную информацию.</div>
+    </div>
+  </main>
 </section>
 
 <dialog id="dlg">
-  <strong>Ключ Gemini API</strong>
-  <p>Ключ сохраняется только в этом браузере.</p>
-  <input id="key" type="password" placeholder="Вставь ключ API" autocomplete="off">
-  <button type="button" id="save">Сохранить</button>
-  <button type="button" id="cancel">Закрыть</button>
+  <h2>Подключение AI</h2>
+  <p class="dialog-sub">Добавь собственные API-ключи. Они сохраняются только в этом браузере.</p>
+
+  <div class="key-group">
+    <label for="geminiKey">✦ Google Gemini API Key</label>
+    <input id="geminiKey" type="password" placeholder="Gemini API Key" autocomplete="off">
+  </div>
+
+  <div class="key-group">
+    <label for="claudeKey">✳ Anthropic Claude API Key</label>
+    <input id="claudeKey" type="password" placeholder="Claude API Key" autocomplete="off">
+  </div>
+
+  <div class="key-group">
+    <label for="openaiKey">◎ OpenAI API Key</label>
+    <input id="openaiKey" type="password" placeholder="OpenAI API Key" autocomplete="off">
+  </div>
+
+  <div class="dialog-actions">
+    <button class="primary" id="saveKeys" type="button">Сохранить ключи</button>
+    <button class="secondary" id="cancel" type="button">Закрыть</button>
+  </div>
+  <div id="settingsStatus"></div>
 </dialog>
 
 <script type="module">
-
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut,
-  onAuthStateChanged
+  getAuth,GoogleAuthProvider,signInWithPopup,signOut,onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  query,
-  orderBy,
-  serverTimestamp,
-  writeBatch
+  getFirestore,collection,addDoc,getDocs,query,orderBy,
+  serverTimestamp,writeBatch
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-/* FIREBASE CONFIG */
+/* EXISTING FIREBASE CONFIG */
 
 const firebaseConfig={
   apiKey:"AIzaSyDXEBjQ9CCSKYffX7XF7hDVHHNLFxxNUN4",
@@ -266,328 +457,364 @@ const firebaseConfig={
   measurementId:"G-C2R9G2D4LJ"
 };
 
-/* CLOUDFLARE WORKER */
+/* EXISTING CLOUDFLARE WORKER */
 
 const API="https://mrbonaiapi.mrbonstudiox.workers.dev/api/chat";
-const MODEL="gemini-flash-latest";
 
 const SYSTEM=
-"Ты — MrBon AI, дружелюбный искусственный интеллект MrBon StudioX. Отвечай на языке пользователя, понятно и по делу. Если спросят, кто ты, скажи, что ты MrBon AI от MrBon StudioX.";
+"Ты — MrBon AI от MrBon StudioX. Будь дружелюбным, точным и полезным. Отвечай на языке пользователя. Не выдумывай факты. Если пользователь спрашивает, кто ты, представься как MrBon AI.";
+
+/* MODELS */
+
+const MODELS={
+  gemini:"gemini-2.5-flash",
+  claude:"claude-sonnet-4-5",
+  openai:"gpt-4.1-mini"
+};
+
+const PROVIDERS={
+  gemini:"Google Gemini",
+  claude:"Anthropic Claude",
+  openai:"OpenAI ChatGPT"
+};
+
+const KEY_NAMES={
+  gemini:"mrbon_key_gemini",
+  claude:"mrbon_key_claude",
+  openai:"mrbon_key_openai"
+};
 
 const $=id=>document.getElementById(id);
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
+const google=new GoogleAuthProvider();
+
+google.setCustomParameters({prompt:"select_account"});
+
+let user=null;
+let history=[];
+let sending=false;
+let controller=null;
+let authGeneration=0;
 
 const log=$("log");
 const input=$("input");
 const send=$("send");
 const dlg=$("dlg");
-const errBox=$("msgerr");
+const providerSelect=$("providerSelect");
 
-const firebaseApp=initializeApp(firebaseConfig);
-const auth=getAuth(firebaseApp);
-const db=getFirestore(firebaseApp);
-
-const provider=new GoogleAuthProvider();
-provider.setCustomParameters({prompt:"select_account"});
-
-let user=null;
-let history=[];
-
-const col=()=>{
-  if(!user) throw new Error("Пользователь не авторизован");
-  return collection(db,"users",user.uid,"messages");
-};
-
-const getKey=()=>{
+function getKey(provider){
   try{
-    return localStorage.getItem("mrbon_key")||"";
-  }catch(e){
-    return "";
-  }
-};
+    const key=localStorage.getItem(KEY_NAMES[provider])||"";
+    if(key)return key;
 
-function add(text,cls){
-  const d=document.createElement("div");
-  d.className="msg "+cls;
-  d.textContent=text;
-  log.appendChild(d);
-  log.scrollTop=log.scrollHeight;
-  return d;
+    // Migration of the old Gemini key
+    if(provider==="gemini"){
+      const old=localStorage.getItem("mrbon_key")||"";
+      if(old)return old;
+    }
+  }catch(e){
+    console.error("Local storage error:",e);
+  }
+  return "";
 }
 
-async function saveMsg(role,text){
+function getSelectedProvider(){
+  return providerSelect.value;
+}
+
+function setStatus(message){
+  $("settingsStatus").textContent=message;
+}
+
+function openSettings(){
+  $("geminiKey").value=getKey("gemini");
+  $("claudeKey").value=getKey("claude");
+  $("openaiKey").value=getKey("openai");
+  setStatus("");
+  dlg.showModal();
+}
+
+function messagesCollection(){
+  if(!user)throw new Error("Сначала войди через Google");
+  return collection(db,"users",user.uid,"messages");
+}
+
+function scrollBottom(){
+  log.scrollTop=log.scrollHeight;
+}
+
+function showWelcome(){
+  log.innerHTML=`
+    <div class="welcome" id="welcome">
+      <img src="logo.png" alt="">
+      <h2>Привет! Я MrBon AI.</h2>
+      <p>Выбери Gemini, Claude или ChatGPT и начни разговор.</p>
+    </div>`;
+}
+
+function addMessage(text,role="model",options={}){
+  const row=document.createElement("div");
+  row.className="msg-row "+(role==="user"?"user":"assistant");
+  if(options.error)row.classList.add("error");
+
+  const avatar=document.createElement("div");
+  avatar.className="avatar";
+  avatar.textContent=role==="user"?"U":"M";
+
+  const content=document.createElement("div");
+  content.className="msg-content";
+
+  const bubble=document.createElement("div");
+  bubble.className="bubble";
+  bubble.textContent=text;
+
+  content.appendChild(bubble);
+
+  if(options.copy!==false && !options.typing){
+    const meta=document.createElement("div");
+    meta.className="msg-meta";
+
+    const label=document.createElement("span");
+    label.textContent=role==="user"?"Ты":"MrBon AI";
+
+    const copy=document.createElement("button");
+    copy.className="copybtn";
+    copy.type="button";
+    copy.textContent="Копировать";
+    copy.onclick=async()=>{
+      try{
+        await navigator.clipboard.writeText(text);
+        copy.textContent="Скопировано!";
+        setTimeout(()=>copy.textContent="Копировать",1200);
+      }catch{
+        copy.textContent="Не удалось";
+      }
+    };
+
+    meta.append(label,copy);
+    content.appendChild(meta);
+  }
+
+  row.append(avatar,content);
+  log.appendChild(row);
+  scrollBottom();
+
+  return {
+    setText(value){bubble.textContent=value;scrollBottom();},
+    setError(){row.classList.add("error");},
+    remove(){row.remove();}
+  };
+}
+
+/* FIRESTORE */
+
+async function saveMessage(role,text){
+  if(!user)return;
+
   try{
-    await addDoc(col(),{
+    await addDoc(messagesCollection(),{
       role,
       text,
+      provider:getSelectedProvider(),
       createdAt:serverTimestamp()
     });
-  }catch(e){
-    console.error("Firestore save error:",e);
+  }catch(error){
+    console.error("Firestore save error:",error);
   }
 }
 
-/* GOOGLE LOGIN */
+async function loadHistory(){
+  history=[];
+  showWelcome();
+
+  try{
+    const snapshot=await getDocs(
+      query(messagesCollection(),orderBy("createdAt"))
+    );
+
+    snapshot.forEach(doc=>{
+      const data=doc.data();
+      if(typeof data.text!=="string")return;
+
+      const role=data.role==="user"?"user":"model";
+
+      history.push({
+        role,
+        parts:[{text:data.text}]
+      });
+
+      addMessage(data.text,role);
+    });
+
+    if(!history.length)showWelcome();
+
+  }catch(error){
+    console.error("History load error:",error);
+    addMessage("Не удалось загрузить историю: "+error.message,"model",{error:true});
+  }
+}
+
+/* LOGIN */
 
 $("gbtn").onclick=async()=>{
-  errBox.textContent="";
+  $("loginError").textContent="";
   $("gbtn").disabled=true;
 
   try{
-    await signInWithPopup(auth,provider);
-  }catch(e){
-    console.error("Firebase login error:",e);
-    errBox.textContent="Не удалось войти: "+(e.code||e.message);
+    await signInWithPopup(auth,google);
+  }catch(error){
+    console.error(error);
+    $("loginError").textContent="Ошибка входа: "+(error.code||error.message);
   }finally{
     $("gbtn").disabled=false;
   }
 };
 
-$("out").onclick=async()=>{
+async function logout(){
   try{
+    if(controller)controller.abort();
     await signOut(auth);
-  }catch(e){
-    console.error(e);
+  }catch(error){
+    console.error(error);
   }
-};
+}
 
-/* AUTH STATE */
+$("sideOut").onclick=logout;
+$("sideSettings").onclick=openSettings;
+$("settings").onclick=openSettings;
+$("mobileMenu").onclick=openSettings;
 
-onAuthStateChanged(auth,async u=>{
-  user=u;
+onAuthStateChanged(auth,async currentUser=>{
+  const generation=++authGeneration;
+  user=currentUser;
 
-  $("login").hidden=!!u;
-  $("app").hidden=!u;
+  $("login").hidden=!!currentUser;
+  $("app").hidden=!currentUser;
 
-  if(!u)return;
-
-  $("who").textContent=u.displayName||u.email||"Пользователь";
-
-  log.innerHTML="";
-  history=[];
-
-  try{
-    const snap=await getDocs(
-      query(col(),orderBy("createdAt"))
-    );
-
-    snap.forEach(d=>{
-      const m=d.data();
-      if(typeof m.text!=="string")return;
-
-      const role=m.role==="user"?"user":"model";
-
-      history.push({
-        role,
-        parts:[{text:m.text}]
-      });
-
-      add(
-        m.text,
-        role==="user"?"me":"bot"
-      );
-    });
-
-  }catch(e){
-    console.error("Firestore history error:",e);
-    add("Не удалось загрузить историю: "+e.message,"bot err");
+  if(!currentUser){
+    history=[];
+    log.innerHTML="";
+    return;
   }
 
-  if(!history.length){
-    add(
-      "Привет, "+(u.displayName||"друг").split(" ")[0]+"! Я MrBon AI. О чём поговорим?",
-      "bot"
-    );
-  }
+  $("who").textContent=currentUser.displayName||currentUser.email||"Пользователь";
 
-  if(!getKey()){
-    $("key").value="";
-    dlg.showModal();
+  await loadHistory();
+
+  if(generation!==authGeneration)return;
+
+  if(!getKey("gemini")&&!getKey("claude")&&!getKey("openai")){
+    openSettings();
   }
 });
 
 /* API KEY SETTINGS */
 
-$("settings").onclick=()=>{
-  $("key").value=getKey();
-  dlg.showModal();
-};
-
-$("save").onclick=()=>{
-  const key=$("key").value.trim();
+$("saveKeys").onclick=()=>{
+  const values={
+    gemini:$("geminiKey").value.trim(),
+    claude:$("claudeKey").value.trim(),
+    openai:$("openaiKey").value.trim()
+  };
 
   try{
-    if(key){
-      localStorage.setItem("mrbon_key",key);
-    }else{
-      localStorage.removeItem("mrbon_key");
+    for(const name of Object.keys(values)){
+      if(values[name]){
+        localStorage.setItem(KEY_NAMES[name],values[name]);
+      }else{
+        localStorage.removeItem(KEY_NAMES[name]);
+      }
     }
-  }catch(e){
-    alert("Не удалось сохранить ключ в браузере.");
-    return;
+
+    // Remove old key after migration
+    localStorage.removeItem("mrbon_key");
+
+    setStatus("Ключи сохранены на этом устройстве.");
+    setTimeout(()=>dlg.close(),650);
+
+  }catch(error){
+    setStatus("Ошибка сохранения. Проверь настройки браузера.");
+    console.error(error);
   }
-
-  dlg.close();
 };
 
-$("cancel").onclick=()=>{
-  dlg.close();
+$("cancel").onclick=()=>dlg.close();
+
+/* PROVIDER SWITCHING */
+
+providerSelect.addEventListener("change",()=>{
+  const name=PROVIDERS[getSelectedProvider()];
+  $("who").textContent=(user?.displayName||"Пользователь")+" · "+name;
+});
+
+/* THEME */
+
+$("theme").onclick=()=>{
+  document.body.classList.toggle("light");
+  localStorage.setItem(
+    "mrbon_theme",
+    document.body.classList.contains("light")?"light":"dark"
+  );
 };
 
-/* CLEAR HISTORY */
+try{
+  if(localStorage.getItem("mrbon_theme")==="light"){
+    document.body.classList.add("light");
+  }
+}catch{}
+
+/* CLEAR CURRENT HISTORY */
 
 $("clear").onclick=async()=>{
-  if(!confirm("Удалить всю историю чата?"))return;
+  if(!user)return;
+  if(!confirm("Удалить всю историю этого разговора?"))return;
 
   try{
-    const snap=await getDocs(col());
-    const batch=writeBatch(db);
+    const snapshot=await getDocs(messagesCollection());
+    const docs=snapshot.docs;
 
-    snap.forEach(d=>{
-      batch.delete(d.ref);
-    });
-
-    await batch.commit();
+    for(let i=0;i<docs.length;i+=450){
+      const batch=writeBatch(db);
+      docs.slice(i,i+450).forEach(doc=>batch.delete(doc.ref));
+      await batch.commit();
+    }
 
     history=[];
-    log.innerHTML="";
-    add("История очищена. О чём поговорим?","bot");
+    showWelcome();
 
-  }catch(e){
-    console.error("Clear history error:",e);
-    alert("Не удалось очистить историю: "+e.message);
+  }catch(error){
+    console.error(error);
+    alert("Не удалось очистить историю: "+error.message);
   }
 };
 
-/* TEXTAREA */
+$("newChat").onclick=()=>{
+  if(history.length&&!confirm("Начать новый разговор? Текущая история будет удалена."))return;
+  $("clear").click();
+};
+
+/* INPUT */
 
 input.addEventListener("input",()=>{
   input.style.height="auto";
-  input.style.height=input.scrollHeight+"px";
+  input.style.height=Math.min(input.scrollHeight,180)+"px";
 });
 
-input.addEventListener("keydown",e=>{
-  if(e.key==="Enter"&&!e.shiftKey){
-    e.preventDefault();
+input.addEventListener("keydown",event=>{
+  if(event.key==="Enter"&&!event.shiftKey){
+    event.preventDefault();
     $("form").requestSubmit();
   }
 });
 
-/* CHAT */
+/* CHAT REQUEST */
 
-$("form").addEventListener("submit",async e=>{
-  e.preventDefault();
-
-  const text=input.value.trim();
-  if(!text)return;
-
-  const key=getKey();
-
-  if(!key){
-    $("key").value="";
-    dlg.showModal();
-    return;
-  }
-
-  if(!user){
-    add("Сначала войди через Google.","bot err");
-    return;
-  }
-
-  add(text,"me");
-
-  input.value="";
-  input.style.height="auto";
-
-  history.push({
-    role:"user",
-    parts:[{text}]
-  });
-
-  await saveMsg("user",text);
-
-  send.disabled=true;
-
-  const wait=add("MrBon AI печатает…","bot");
-
-  try{
-
-    /* FIREBASE ID TOKEN */
-
-    const idToken=await user.getIdToken();
-
-    /* CONVERT CHAT HISTORY FOR WORKER */
-
-    const workerHistory=history.slice(0,-1).map(m=>({
-      role:m.role==="model"?"assistant":"user",
-      content:m.parts?.[0]?.text||""
-    }));
-
-    /* SEND REQUEST TO CLOUDFLARE */
-
-    const response=await fetch(API,{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json",
-        "Authorization":"Bearer "+idToken
-      },
-      body:JSON.stringify({
-        provider:"gemini",
-        apiKey:key,
-        message:text,
-        model:MODEL,
-        system:SYSTEM,
-        history:workerHistory
-      })
-    });
-
-    let data;
-
-    try{
-      data=await response.json();
-    }catch{
-      throw new Error("Сервер вернул неправильный ответ.");
-    }
-
-    if(!response.ok||!data.success){
-      throw new Error(
-        data.message||
-        data.error||
-        "Ошибка сервера: "+response.status
-      );
-    }
-
-    const reply=typeof data.reply==="string"
-      ?data.reply
-      :"Пустой ответ MrBon AI";
-
-    history.push({
-      role:"model",
-      parts:[{text:reply}]
-    });
-
-    wait.textContent=reply;
-
-    await saveMsg("model",reply);
-
-  }catch(err){
-
-    console.error("MrBon AI chat error:",err);
-
-    history.pop();
-
-    wait.textContent=
-      "Не удалось получить ответ: "+err.message;
-
-    wait.classList.add("err");
-
-  }finally{
-
-    send.disabled=false;
-    log.scrollTop=log.scrollHeight;
-
-  }
-});
-
-</script>
-</body>
-</html>
+async function requestAI(provider,key,message,chatHistory,idToken){
+  const response=await fetch(API,{
+    method:"POST",
+    headers:{
+      "Content-Type":"application/json",
+      "Authorization":"Bearer "+idToke
