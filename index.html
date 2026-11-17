@@ -2,1307 +2,528 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#101018">
-  <title>MrBon AI</title>
-
-  <link rel="icon" type="image/png" href="./favicon.png">
-  <link rel="apple-touch-icon" href="./logo.png">
-
-  <style>
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #101018;
-      color: #f5f5fa;
-      min-height: 100vh;
-    }
-
-    button, input, select, textarea { font: inherit; }
-
-    button {
-      cursor: pointer;
-      border: 0;
-      border-radius: 10px;
-      padding: 12px 16px;
-      color: white;
-      background: #5550d9;
-    }
-
-    button:disabled { opacity: .55; cursor: wait; }
-
-    input, select, textarea {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #343444;
-      border-radius: 10px;
-      color: white;
-      background: #191925;
-      outline: none;
-    }
-
-    input:focus, select:focus, textarea:focus {
-      border-color: #7771ff;
-    }
-
-    .hidden { display: none !important; }
-
-    .center {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .panel {
-      width: 100%;
-      max-width: 440px;
-      padding: 28px;
-      background: #191925;
-      border: 1px solid #303044;
-      border-radius: 20px;
-      text-align: center;
-    }
-
-    .logo {
-      width: 110px;
-      height: 110px;
-      object-fit: contain;
-      display: block;
-      margin: 0 auto 12px;
-    }
-
-    .brand {
-      font-size: 30px;
-      font-weight: 800;
-      color: #8984ff;
-      margin-bottom: 8px;
-    }
-
-    .muted {
-      color: #a3a3b5;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .error {
-      color: #ff7777;
-      margin-top: 12px;
-      font-size: 13px;
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
-    }
-
-    .success {
-      color: #79dfa0;
-      font-size: 13px;
-      margin-top: 8px;
-    }
-
-    .full { width: 100%; margin-top: 14px; }
-
-    .app {
-      max-width: 1000px;
-      margin: auto;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      padding: 16px;
-    }
-
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 10px 0 18px;
-      border-bottom: 1px solid #303044;
-    }
-
-    .header-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 22px;
-      font-weight: 800;
-      color: #8984ff;
-    }
-
-    .header-brand img {
-      width: 42px;
-      height: 42px;
-      object-fit: contain;
-    }
-
-    .header-actions { display: flex; gap: 8px; }
-
-    .small-btn { padding: 9px 12px; font-size: 13px; }
-
-    .settings {
-      margin: 16px 0;
-      padding: 16px;
-      border: 1px solid #303044;
-      background: #191925;
-      border-radius: 14px;
-    }
-
-    .settings-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .field { margin-bottom: 12px; text-align: left; }
-
-    .field label {
-      display: block;
-      margin-bottom: 7px;
-      font-size: 13px;
-      color: #b9b9ca;
-    }
-
-    .chat {
-      flex: 1;
-      min-height: 300px;
-      padding: 12px 0;
-    }
-
-    .message {
-      max-width: 85%;
-      margin: 12px 0;
-      padding: 13px 15px;
-      border-radius: 14px;
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
-      line-height: 1.5;
-    }
-
-    .user {
-      margin-left: auto;
-      background: #39358c;
-    }
-
-    .assistant {
-      margin-right: auto;
-      background: #222231;
-      border: 1px solid #343444;
-    }
-
-    .message small {
-      display: block;
-      color: #aaaac0;
-      font-size: 11px;
-      margin-bottom: 6px;
-    }
-
-    .composer {
-      display: flex;
-      gap: 10px;
-      padding: 12px 0;
-      border-top: 1px solid #303044;
-    }
-
-    .composer textarea {
-      resize: vertical;
-      min-height: 52px;
-      max-height: 180px;
-    }
-
-    .composer button { min-width: 90px; }
-
-    .bottom-note {
-      text-align: center;
-      color: #77778c;
-      font-size: 11px;
-      padding: 8px;
-    }
-
-    @media (max-width: 600px) {
-      .settings-grid { grid-template-columns: 1fr; gap: 0; }
-      .message { max-width: 95%; }
-      .app { padding: 12px; }
-      .header-brand { font-size: 19px; }
-      .composer { gap: 6px; }
-      .composer button { min-width: 72px; padding: 10px; }
-      .small-btn { padding: 8px; }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MrBon AI — MrBon StudioX</title>
+<link rel="icon" type="image/png" href="./favicon.png">
+<style>
+:root{
+ --bg:#d9d9d9;--panel:#f2f2f2;--ink:#111;
+ --grey:#6b6b6b;--yellow:#fff700;--bot:#fff;
+ color-scheme:light;
+}
+@media(prefers-color-scheme:dark){
+ :root{--bg:#2b2b2b;--panel:#3a3a3a;--ink:#f4f4f4;--grey:#b0b0b0;--bot:#4a4a4a;color-scheme:dark}
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+ background:var(--bg);color:var(--ink);
+ font:16px/1.5 "Trebuchet MS",system-ui,sans-serif;
+ display:flex;flex-direction:column;
+ padding-top:env(safe-area-inset-top,0px);
+ padding-bottom:env(safe-area-inset-bottom,0px)
+}
+[hidden]{display:none!important}
+button,select{
+ font:inherit;font-weight:700;
+ background:var(--yellow);color:#000;
+ border:2px solid #000;border-radius:12px;
+ padding:8px 12px;cursor:pointer
+}
+button:disabled{opacity:.5;cursor:wait}
+:focus-visible{outline:3px solid #000;outline-offset:2px}
+#login{
+ flex:1;display:flex;flex-direction:column;
+ align-items:center;justify-content:center;
+ gap:14px;padding:24px;text-align:center
+}
+#login img{width:min(55vw,240px);height:auto}
+#login h1{margin:0;font-size:1.7rem}
+#login p{margin:0;max-width:34ch;color:var(--grey)}
+#gbtn{display:flex;align-items:center;gap:10px;padding:12px 20px;background:#fff;box-shadow:3px 3px 0 #000}
+#msgerr{color:#b00020;font-size:.9rem;max-width:36ch}
+#app{flex:1;display:flex;flex-direction:column;min-height:0}
+header{
+ display:flex;align-items:center;gap:9px;
+ padding:8px 12px;background:var(--panel);
+ border-bottom:3px solid #000
+}
+header img{width:42px;height:42px;flex:none}
+header h1{font-size:1.1rem;margin:0;line-height:1.1}
+header small{
+ color:var(--grey);display:block;max-width:22ch;
+ overflow:hidden;text-overflow:ellipsis;white-space:nowrap
+}
+header .sp{flex:1}
+header button{padding:6px 9px;font-size:.8rem}
+#provider{
+ margin:8px 12px 0;
+ width:calc(100% - 24px);
+ background:var(--panel);color:var(--ink);
+ border:2px solid #000;border-radius:10px;padding:8px
+}
+#log{
+ flex:1;overflow-y:auto;padding:14px;
+ display:flex;flex-direction:column;gap:10px
+}
+.msg{
+ max-width:min(85%,640px);padding:10px 14px;
+ border:2px solid #000;border-radius:16px;
+ white-space:pre-wrap;overflow-wrap:anywhere
+}
+.me{align-self:flex-end;background:var(--yellow);color:#000;border-bottom-right-radius:4px}
+.bot{align-self:flex-start;background:var(--bot);border-bottom-left-radius:4px}
+.err{border-style:dashed;border-color:#b00020}
+form{
+ display:flex;gap:8px;padding:10px 14px;
+ background:var(--panel);border-top:3px solid #000
+}
+textarea{
+ flex:1;resize:none;font:inherit;color:inherit;
+ background:var(--bg);border:2px solid #000;
+ border-radius:12px;padding:10px;max-height:120px;min-width:0
+}
+dialog{
+ border:3px solid #000;border-radius:16px;
+ background:var(--panel);color:var(--ink);
+ max-width:420px;width:92%;padding:20px
+}
+dialog::backdrop{background:#0009}
+dialog input,dialog select{
+ width:100%;font:inherit;padding:10px;
+ border:2px solid #000;border-radius:10px;
+ margin:7px 0 12px;background:var(--bg);color:var(--ink)
+}
+dialog p{margin:6px 0;font-size:.9rem;color:var(--grey)}
+.dialog-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.status{font-size:.85rem;color:var(--grey);margin-top:8px}
+@media(max-width:520px){
+ header{gap:6px;padding:7px}
+ header img{width:34px;height:34px}
+ header h1{font-size:1rem}
+ header button{font-size:.72rem;padding:6px}
+ .msg{max-width:92%}
+}
+</style>
 </head>
-
 <body>
 
-  <section id="loginScreen" class="center">
-    <div class="panel">
-      <img class="logo" src="./logo.png" alt="MrBon AI logo">
-      <div class="brand">MrBon AI</div>
-      <h2>Добро пожаловать!</h2>
-      <p class="muted">Войди через Google, чтобы пользоваться MrBon AI.</p>
-      <button id="gbtn" class="full">Войти через Google</button>
-      <div id="msgerr" class="error"></div>
-      <p class="muted">MrBon Studio X</p>
-    </div>
-  </section>
-
-  <main id="appScreen" class="app hidden">
-
-    <header>
-      <div class="header-brand">
-        <img src="./logo.png" alt="MrBon">
-        <span>MrBon AI</span>
-      </div>
-
-      <div class="header-actions">
-        <button id="clearBtn" class="small-btn">Очистить чат</button>
-        <button id="logoutBtn" class="small-btn">Выйти</button>
-      </div>
-    </header>
-
-    <section class="settings">
-      <div class="settings-grid">
-        <div class="field">
-          <label for="provider">AI-провайдер</label>
-          <select id="provider">
-            <option value="gemini">Google Gemini</option>
-            <option value="claude">Anthropic Claude</option>
-            <option value="openai">OpenAI</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="model">Модель</label>
-          <input id="model" type="text" value="gemini-2.5-flash">
-        </div>
-      </div>
-
-      <div class="field">
-        <label for="apiKey">Твой API-ключ</label>
-        <input id="apiKey" type="password" placeholder="Вставь свой API-ключ">
-      </div>
-
-      <button id="saveKeyBtn" class="small-btn">Сохранить ключ</button>
-      <span id="keyStatus" class="success"></span>
-
-      <p class="muted">
-        Ключ хранится только в localStorage твоего браузера.
-        Он не сохраняется в Firebase или Firestore.
-      </p>
-    </section>
-
-    <section id="chat" class="chat">
-      <div class="muted" style="text-align:center">
-        Начни разговор с MrBon AI.
-      </div>
-    </section>
-
-    <div class="composer">
-      <textarea id="messageInput" placeholder="Напиши сообщение..."></textarea>
-      <button id="sendBtn">Отправить</button>
-    </div>
-
-    <div id="chatError" class="error"></div>
-    <div class="bottom-note">MrBon AI · MrBon Studio X</div>
-  </main>
-
-  <script type="module">
-    import { initializeApp }
-      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-    import {
-      getAuth,
-      GoogleAuthProvider,
-      signInWithRedirect,
-      getRedirectResult,
-      onAuthStateChanged,
-      signOut,
-      setPersistence,
-      browserLocalPersistence
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-    import {
-      getFirestore,
-      collection,
-      addDoc,
-      getDocs,
-      query,
-      orderBy,
-      limit,
-      serverTimestamp
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyDXEBjQ9CCSKYffX7XF7hDVHHNLFxxNUN4",
-      authDomain: "mrbonaimax.firebaseapp.com",
-      projectId: "mrbonaimax",
-      storageBucket: "mrbonaimax.firebasestorage.app",
-      messagingSenderId: "270950722992",
-      appId: "1:270950722992:web:cda5f3900db16173533a75",
-      measurementId: "G-C2R9G2D4LJ"
-    };
-
-    const WORKER_URL =
-      "https://mrbonaiapi.mrbonstudiox.workers.dev/api/chat";
-
-    const $ = id => document.getElementById(id);
-
-    const loginScreen = $("loginScreen");
-    const appScreen = $("appScreen");
-    const errBox = $("msgerr");
-    const chatError = $("chatError");
-    const chat = $("chat");
-
-    let auth;
-    let db;
-    let currentUser = null;
-    let sending = false;
-
-    const defaultModels = {
-      gemini: "gemini-2.5-flash",
-      claude: "claude-sonnet-4-5",
-      openai: "gpt-4.1-mini"
-    };
-
-    const keyNames = {
-      gemini: "mrbon_key_gemini",
-      claude: "mrbon_key_claude",
-      openai: "mrbon_key_openai"
-    };
-
-    function showError(element, message) {
-      element.textContent = message || "";
-    }
-
-    function addMessage(role, text, provider = "") {
-      const empty = chat.querySelector(".muted");
-      if (empty) empty.remove();
-
-      const item = document.createElement("div");
-      item.className = "message " +
-        (role === "user" ? "user" : "assistant");
-
-      const label = document.createElement("small");
-      label.textContent =
-        role === "user" ? "Ты" :
-        provider ? "MrBon AI · " + provider : "MrBon AI";
-
-      const content = document.createElement("div");
-      content.textContent = String(text ?? "");
-
-      item.append(label, content);
-      chat.appendChild(item);
-      chat.scrollTop = chat.scrollHeight;
-    }
-
-    function showLogin() {
-      loginScreen.classList.remove("hidden");
-      appScreen.classList.add("hidden");
-    }
-
-    function showApp() {
-      loginScreen.classList.add("hidden");
-      appScreen.classList.remove("hidden");
-    }
-
-    function getStoredKey(provider) {
-      return localStorage.getItem(keyNames[provider]) || "";
-    }
-
-    function loadProviderSettings() {
-      const provider = $("provider").value;
-      $("model").value = defaultModels[provider];
-      $("apiKey").value = getStoredKey(provider);
-      $("keyStatus").textContent =
-        $("apiKey").value ? "Ключ загружен" : "";
-    }
-
-    $("provider").addEventListener("change", loadProviderSettings);
-
-    $("saveKeyBtn").addEventListener("click", () => {
-      const provider = $("provider").value;
-      const key = $("apiKey").value.trim();
-
-      if (!key) {
-        showError(chatError, "Сначала вставь API-ключ.");
-        return;
-      }
-
-      localStorage.setItem(keyNames[provider], key);
-      $("keyStatus").textContent = "Ключ сохранён на этом устройстве.";
-      showError(chatError, "");
-    });
-
-    async function loadHistory() {
-      if (!currentUser) return;
-
-      chat.innerHTML = "";
-
-      try {
-        const messagesRef = collection(
-          db, "users", currentUser.uid, "messages"
-        );
-
-        const q = query(
-          messagesRef,
-          orderBy("createdAt", "desc"),
-          limit(100)
-        );
-
-        const snapshot = await getDocs(q);
-        const messages = [];
-
-        snapshot.forEach(doc => messages.push(doc.data()));
-        messages.reverse();
-
-        if (!messages.length) {
-          chat.innerHTML =
-            '<div class="muted" style="text-align:center">Начни разговор с MrBon AI.</div>';
-          return;
-        }
-
-        for (const message of messages) {
-          addMessage(
-            message.role,
-            message.text,
-            message.provider || ""
-          );
-        }
-      } catch (error) {
-        console.error("History error:", error);
-        chat.innerHTML =
-          '<div class="muted">Не удалось загрузить историю сообщений.</div>';
-      }
-    }
-
-    async function saveMessage(role, text, provider) {
-      if (!currentUser) return;
-
-      const messagesRef = collection(
-        db, "users", currentUser.uid, "messages"
-      );
-
-      await addDoc(messagesRef, {
-        role,
-        text,
-        provider: provider || "",
-        createdAt: serverTimestamp()
-      });
-    }
-
-    async function sendMessage() {
-      if (sending) return;
-
-      const message = $("messageInput").value.trim();
-      const provider = $("provider").value;
-      const model = $("model").value.trim();
-      const apiKey = $("apiKey").value.trim();
-
-      if (!message) return;
-
-      if (!apiKey) {
-        showError(chatError, "Вставь API-ключ для выбранного провайдера.");
-        return;
-      }
-
-      if (!model) {
-        showError(chatError, "Укажи название модели.");
-        return;
-      }
-
-      if (!currentUser) {
-        showError(chatError, "Сначала войди через Google.");
-        return;
-      }
-
-      sending = true;
-      $("sendBtn").disabled = true;
-      $("messageInput").value = "";
-      showError(chatError, "");
-
-      addMessage("user", message);
-
-      try {
-        await saveMessage("user", message, provider);
-
-        const token = await currentUser.getIdToken();
-
-        const response = await fetch(WORKER_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + token
-          },
-          body: JSON.stringify({
-            provider,
-            apiKey,
-            message,
-            model,
-            system: "Ты MrBon AI — полезный и дружелюбный AI-помощник.",
-            history: []
-          })
-        });
-
-        const data = await response.json();
-
-        if (!response.ok || !data.success) {
-          throw new Error(
-            data.error || data.message ||
-            ("Ошибка сервера: HTTP " + response.status)
-          );
-        }
-
-        const reply = data.reply || "AI не вернул текстовый ответ.";
-
-        addMessage("assistant", reply, provider);
-        await saveMessage("assistant", reply, provider);
-
-      } catch (error) {
-        console.error("Chat error:", error);
-        showError(chatError, "Ошибка: " + error.message);
-      } finally {
-        sending = false;
-        $("sendBtn").disabled = false;
-        $("messageInput").focus();
-      }
-    }
-
-    $("sendBtn").addEventListener("click", sendMessage);
-
-    $("messageInput").addEventListener("keydown", event => {
-      if (event.key === "Enter" && !event.shiftKey) {
-        event.preventDefault();
-        sendMessage();
-      }
-    });
-
-    $("clearBtn").addEventListener("click", () => {
-      if (!confirm("Очистить отображение чата? История в Firestore останется.")) {
-        return;
-      }
-
-      chat.innerHTML =
-        '<div class="muted" style="text-align:center">Чат очищен на экране. Старая история сохранена.</div>';
-    });
-
-    $("logoutBtn").addEventListener("click", async () => {
-      try {
-        await signOut(auth);
-      } catch (error) {
-        showError(chatError, error.message);
-      }
-    });
-
-    $("gbtn").addEventListener("click", async () => {
-      $("gbtn").disabled = true;
-      showError(errBox, "Переход к Google...");
-
-      try {
-        // Сначала сохраняем сессию в браузере.
-        await setPersistence(auth, browserLocalPersistence);
-
-        const provider = new GoogleAuthProvider();
-        provider.setCustomParameters({ prompt: "select_account" });
-
-        await signInWithRedirect(auth, provider);
-
-      } catch (error) {
-        console.error("Google login error:", error);
-        showError(
-          errBox,
-          "Ошибка входа: " + (error.code || error.message)
-        );
-        $("gbtn").disabled = false;
-      }
-    });
-
-    async function startApp() {
-      try {
-        const firebaseApp = initializeApp(firebaseConfig);
-        auth = getAuth(firebaseApp);
-        db = getFirestore(firebaseApp);
-
-        // Включаем постоянное хранение авторизации.
-        await setPersistence(auth, browserLocalPersistence);
-
-        // Получаем результат возвращения от Google.
-        try {
-          await getRedirectResult(auth);
-        } catch (error) {
-          console.error("Redirect result error:", error);
-          showError(
-            errBox,
-            "Ошибка возврата от Google: " +
-            (error.code || error.message)
-          );
-        }
-
-        onAuthStateChanged(auth, async user => {
-          currentUser = user;
-
-          if (user) {
-            showApp();
-            showError(errBox, "");
-            loadProviderSettings();
-            await loadHistory();
-          } else {
-            showLogin();
-          }
-        });
-
-      } catch (error) {
-        console.error("Firebase initialization error:", error);
-        showLogin();
-        showError(
-          errBox,
-          "Firebase не запустился: " +
-          (error.code || error.message)
-        );
-        $("gbtn").disabled = true;
-      }
-    }
-
-    // Перенос старого Gemini-ключа.
-    if (
-      localStorage.getItem("mrbon_key") &&
-      !localStorage.getItem("mrbon_key_gemini")
-    ) {
-      localStorage.setItem(
-        "mrbon_key_gemini",
-        localStorage.getItem("mrbon_key")
-      );
-    }
-
-    startApp();
-  </script>
-
-</body>
-</html>
-shot.forEach(doc => messages.push(doc.data()));
-        messages.reverse();
-
-        if (!messages.length) {
-          chat.innerHTML =
-            '<div class="muted" style="text-align:center">Начни разговор с MrBon AI.</div>';
-          return;
-        }
-
-        for (const message of messages) {
-          addMessage(
-            message.role,
-            message.text,
-            message.provider || ""
-          );
-        }
-      } catch (error) {
-        console.error("History error:", error);
-        chat.innerHTML =
-          '<div class="muted">Не удалось загрузить историю сообщений.</div>';
-      }
-    }
-
-    async function saveMessage(role, text, provider) {
-      if (!currentUser) return;
-
-      const messagesRef = collection(
-        db, "users", currentUser.uid, "messages"
-      );
-
-      await addDoc(messagesRef, {
-        role,
-        text,
-        provider: provider || "",
-        createdAt: serverTimestamp()
-      });
-    }
-
-    async function sendMessage() {
-      if (sending) return;
-
-      const message = $("messageInput").value.trim();
-      const provider = $("provider").value;
-      const model = $("model").value.trim();
-      const apiKey = $("apiKey").value.trim();
-
-      if (!message) return;
-
-      if (!apiKey) {
-        showError(chatError, "Вставь и сохрани API-ключ для выбранного провайдера.");
-        return;
-      }
-
-      if (!model) {
-        showError(chatError, "Укажи название модели.");
-        return;
-      }
-
-      if (!currentUser) {
-        showError(chatError, "Сначала войди через Google.");
-        return;
-      }
-
-      sending = true;
-      $("sendBtn").disabled = true;
-      $("messageInput").value = "";
-      showError(chatError, "");
-
-      addMessage("user", message);
-
-      try {
-        await saveMessage("user", message, provider);
-
-        const token = await currentUser.getIdToken();
-
-        const response = await fetch(WORKER_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + token
-          },
-          body: JSON.stringify({
-            provider,
-            apiKey,
-            message,
-            model,
-            system: "Ты MrBon AI — полезный и дружелюбный AI-помощник.",
-            history: []
-          })
-        });
-
-        const data = await response.json();
-
-        if (!response.ok || !data.success) {
-          throw new Error(
-            data.error || data.message ||
-            ("Ошибка сервера: HTTP " + response.status)
-          );
-        }
-
-        const reply = data.reply || "AI не вернул текстовый ответ.";
-
-        addMessage("assistant", reply, provider);
-        await saveMessage("assistant", reply, provider);
-
-      } catch (error) {
-        console.error("Chat error:", error);
-        showError(chatError, "Ошибка: " + error.message);
-      } finally {
-        sending = false;
-        $("sendBtn").disabled = false;
-        $("messageInput").focus();
-      }
-    }
-
-    $("sendBtn").addEventListener("click", sendMessage);
-
-    $("messageInput").addEventListener("keydown", event => {
-      if (event.key === "Enter" && !event.shiftKey) {
-        event.preventDefault();
-        sendMessage();
-      }
-    });
-
-    $("clearBtn").addEventListener("click", () => {
-      if (!confirm("Очистить отображение чата? История в Firestore останется.")) {
-        return;
-      }
-
-      chat.innerHTML =
-        '<div class="muted" style="text-align:center">Чат очищен на экране. Старая история сохранена.</div>';
-    });
-
-    $("logoutBtn").addEventListener("click", async () => {
-      try {
-        await signOut(auth);
-      } catch (error) {
-        showError(chatError, error.message);
-      }
-    });
-
-    $("gbtn").addEventListener("click", async () => {
-      $("gbtn").disabled = true;
-      showError(errBox, "Переход к Google...");
-
-      try {
-        const provider = new GoogleAuthProvider();
-        provider.setCustomParameters({ prompt: "select_account" });
-        await signInWithRedirect(auth, provider);
-      } catch (error) {
-        console.error("Google login error:", error);
-        showError(errBox, "Ошибка входа: " + (error.code || error.message));
-        $("gbtn").disabled = false;
-      }
-    });
-
-    async function startApp() {
-      try {
-        const firebaseApp = initializeApp(firebaseConfig);
-        auth = getAuth(firebaseApp);
-        db = getFirestore(firebaseApp);
-
-        // Проверяем результат входа после возврата от Google.
-        try {
-          await getRedirectResult(auth);
-        } catch (error) {
-          console.error("Redirect result error:", error);
-          showError(
-            errBox,
-            "Google Login: " + (error.code || error.message)
-          );
-        }
-
-        onAuthStateChanged(auth, async user => {
-          currentUser = user;
-
-          if (user) {
-            showApp();
-            loadProviderSettings();
-            await loadHistory();
-          } else {
-            showLogin();
-          }
-        });
-
-      } catch (error) {
-        console.error("Firebase initialization error:", error);
-        showError(
-          errBox,
-          "Firebase не запустился: " + (error.code || error.message)
-        );
-        $("gbtn").disabled = true;
-      }
-    }
-
-    // Перенос старого Gemini-ключа в новую систему.
-    if (
-      localStorage.getItem("mrbon_key") &&
-      !localStorage.getItem("mrbon_key_gemini")
-    ) {
-      localStorage.setItem(
-        "mrbon_key_gemini",
-        localStorage.getItem("mrbon_key")
-      );
-    }
-
-    startApp();
-  </script>
-
-</body>
-</html>
-class="hint">MrBon AI может ошибаться. Проверяй важную информацию.</div>
-    </div>
-  </main>
+<section id="login">
+ <img src="./logo.png" alt="MrBon AI">
+ <h1>MrBon AI</h1>
+ <p>Войди через Google, чтобы общаться с ИИ. Твои чаты сохранятся в аккаунте.</p>
+ <button id="gbtn" type="button">
+  <svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true">
+   <path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/>
+   <path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.6 5.9c4.5-4.1 7-10.2 7-17.6z"/>
+   <path fill="#FBBC05" d="M10.5 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7l-7.9-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.9-6.1z"/>
+   <path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.6-5.9c-2.1 1.4-4.9 2.3-8.3 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/>
+  </svg>
+  Войти через Google
+ </button>
+ <div id="msgerr" role="alert"></div>
+</section>
+
+<section id="app" hidden>
+ <header>
+  <img src="./logo.png" alt="">
+  <div><h1>MrBon AI</h1><small id="who"></small></div>
+  <span class="sp"></span>
+  <button type="button" id="settings">Ключи</button>
+  <button type="button" id="clear">Очистить</button>
+  <button type="button" id="out">Выйти</button>
+ </header>
+
+ <select id="provider" aria-label="Выбор ИИ">
+  <option value="gemini">Google Gemini</option>
+  <option value="claude">Anthropic Claude</option>
+  <option value="openai">OpenAI ChatGPT</option>
+ </select>
+
+ <main id="log" aria-live="polite"></main>
+
+ <form id="form">
+  <textarea id="input" rows="1" placeholder="Напиши сообщение MrBon AI…" aria-label="Сообщение"></textarea>
+  <button id="send" type="submit">Отправить</button>
+ </form>
 </section>
 
 <dialog id="dlg">
-  <h2>Подключение AI</h2>
-  <p class="dialog-sub">Добавь собственные API-ключи. Они сохраняются только в этом браузере.</p>
+ <h3 style="margin-top:0">Настройки MrBon AI</h3>
+ <p>Выбери ИИ, модель и введи соответствующий API-ключ.</p>
 
-  <div class="key-group">
-    <label for="geminiKey">✦ Google Gemini API Key</label>
-    <input id="geminiKey" type="password" placeholder="Gemini API Key" autocomplete="off">
-  </div>
+ <label for="settingsProvider">Провайдер</label>
+ <select id="settingsProvider">
+  <option value="gemini">Google Gemini</option>
+  <option value="claude">Anthropic Claude</option>
+  <option value="openai">OpenAI ChatGPT</option>
+ </select>
 
-  <div class="key-group">
-    <label for="claudeKey">✳ Anthropic Claude API Key</label>
-    <input id="claudeKey" type="password" placeholder="Claude API Key" autocomplete="off">
-  </div>
+ <label for="model">Модель</label>
+ <select id="model"></select>
 
-  <div class="key-group">
-    <label for="openaiKey">◎ OpenAI API Key</label>
-    <input id="openaiKey" type="password" placeholder="OpenAI API Key" autocomplete="off">
-  </div>
+ <label for="key">API-ключ</label>
+ <input id="key" type="password" placeholder="Вставь API-ключ" autocomplete="off">
 
-  <div class="dialog-actions">
-    <button class="primary" id="saveKeys" type="button">Сохранить ключи</button>
-    <button class="secondary" id="cancel" type="button">Закрыть</button>
-  </div>
-  <div id="settingsStatus"></div>
+ <p>Ключ хранится только в localStorage этого браузера. Он не сохраняется в Firebase.</p>
+ <div class="dialog-actions">
+  <button type="button" id="save">Сохранить</button>
+  <button type="button" id="close">Закрыть</button>
+ </div>
+ <div id="settingsStatus" class="status"></div>
 </dialog>
 
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
 import {
-  getAuth,GoogleAuthProvider,signInWithPopup,signOut,onAuthStateChanged
+ getAuth,GoogleAuthProvider,signInWithPopup,
+ signOut,onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
 import {
-  getFirestore,collection,addDoc,getDocs,query,orderBy,
-  serverTimestamp,writeBatch
+ getFirestore,collection,addDoc,getDocs,query,
+ orderBy,serverTimestamp,writeBatch
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-/* EXISTING FIREBASE CONFIG */
-
+/* Firebase configuration */
 const firebaseConfig={
-  apiKey:"AIzaSyDXEBjQ9CCSKYffX7XF7hDVHHNLFxxNUN4",
-  authDomain:"mrbonaimax.firebaseapp.com",
-  projectId:"mrbonaimax",
-  storageBucket:"mrbonaimax.firebasestorage.app",
-  messagingSenderId:"270950722992",
-  appId:"1:270950722992:web:cda5f3900db16173533a75",
-  measurementId:"G-C2R9G2D4LJ"
+ apiKey:"AIzaSyDXEBJq9CCSKYffX7XF7hDVHHNLFxxNUN4",
+ authDomain:"mrbonaimax.firebaseapp.com",
+ projectId:"mrbonaimax",
+ storageBucket:"mrbonaimax.firebasestorage.app",
+ messagingSenderId:"270950722992",
+ appId:"1:270950722992:web:cda5f3900db16173533a75",
+ measurementId:"G-C2R9G2D4LJ"
 };
 
-/* EXISTING CLOUDFLARE WORKER */
-
-const API="https://mrbonaiapi.mrbonstudiox.workers.dev/api/chat";
+/* Cloudflare Worker */
+const WORKER_URL="https://mrbonaiapi.mrbonstudiox.workers.dev/api/chat";
 
 const SYSTEM=
-"Ты — MrBon AI от MrBon StudioX. Будь дружелюбным, точным и полезным. Отвечай на языке пользователя. Не выдумывай факты. Если пользователь спрашивает, кто ты, представься как MrBon AI.";
-
-/* MODELS */
+"Ты — MrBon AI, дружелюбный искусственный интеллект компании MrBon StudioX. "+
+"Отвечай на языке пользователя, понятно и по делу. "+
+"Если спросят, кто ты, скажи, что ты MrBon AI от MrBon StudioX.";
 
 const MODELS={
-  gemini:"gemini-2.5-flash",
-  claude:"claude-sonnet-4-5",
-  openai:"gpt-4.1-mini"
-};
-
-const PROVIDERS={
-  gemini:"Google Gemini",
-  claude:"Anthropic Claude",
-  openai:"OpenAI ChatGPT"
-};
-
-const KEY_NAMES={
-  gemini:"mrbon_key_gemini",
-  claude:"mrbon_key_claude",
-  openai:"mrbon_key_openai"
+ gemini:[
+  {id:"gemini-2.5-flash",name:"Gemini 2.5 Flash"},
+  {id:"gemini-2.5-pro",name:"Gemini 2.5 Pro"},
+  {id:"gemini-flash-latest",name:"Gemini Flash Latest"}
+ ],
+ claude:[
+  {id:"claude-sonnet-4-5",name:"Claude Sonnet 4.5"},
+  {id:"claude-haiku-4-5",name:"Claude Haiku 4.5"},
+  {id:"claude-opus-4-1",name:"Claude Opus 4.1"}
+ ],
+ openai:[
+  {id:"gpt-4.1-mini",name:"GPT-4.1 Mini"},
+  {id:"gpt-4.1",name:"GPT-4.1"},
+  {id:"gpt-4o",name:"GPT-4o"}
+ ]
 };
 
 const $=id=>document.getElementById(id);
-
-const app=initializeApp(firebaseConfig);
-const auth=getAuth(app);
-const db=getFirestore(app);
-const google=new GoogleAuthProvider();
-
-google.setCustomParameters({prompt:"select_account"});
-
-let user=null;
-let history=[];
-let sending=false;
-let controller=null;
-let authGeneration=0;
-
+const login=$("login");
+const appScreen=$("app");
 const log=$("log");
 const input=$("input");
 const send=$("send");
 const dlg=$("dlg");
-const providerSelect=$("providerSelect");
+const provider=$("provider");
+const settingsProvider=$("settingsProvider");
+const modelSelect=$("model");
+const keyInput=$("key");
 
-function getKey(provider){
-  try{
-    const key=localStorage.getItem(KEY_NAMES[provider])||"";
-    if(key)return key;
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
 
-    // Migration of the old Gemini key
-    if(provider==="gemini"){
-      const old=localStorage.getItem("mrbon_key")||"";
-      if(old)return old;
-    }
-  }catch(e){
-    console.error("Local storage error:",e);
-  }
-  return "";
+let user=null;
+let history=[];
+let sending=false;
+
+const keyName=p=>"mrbon_key_"+p;
+
+function getKey(p=provider.value){
+ try{return localStorage.getItem(keyName(p))||""}
+ catch(e){return ""}
 }
 
-function getSelectedProvider(){
-  return providerSelect.value;
+function setKey(p,value){
+ try{localStorage.setItem(keyName(p),value)}
+ catch(e){throw new Error("Браузер не разрешил сохранить ключ")}
 }
 
-function setStatus(message){
-  $("settingsStatus").textContent=message;
-}
-
-function openSettings(){
-  $("geminiKey").value=getKey("gemini");
-  $("claudeKey").value=getKey("claude");
-  $("openaiKey").value=getKey("openai");
-  setStatus("");
-  dlg.showModal();
+function addMessage(text,role="assistant",isError=false){
+ const node=document.createElement("div");
+ node.className="msg "+(role==="user"?"me":"bot")+(isError?" err":"");
+ node.textContent=text;
+ log.appendChild(node);
+ log.scrollTop=log.scrollHeight;
+ return node;
 }
 
 function messagesCollection(){
-  if(!user)throw new Error("Сначала войди через Google");
-  return collection(db,"users",user.uid,"messages");
+ if(!user)throw new Error("Пользователь не авторизован");
+ return collection(db,"users",user.uid,"messages");
 }
 
-function scrollBottom(){
-  log.scrollTop=log.scrollHeight;
+async function saveMessage(role,text,usedProvider){
+ try{
+  await addDoc(messagesCollection(),{
+   role,
+   text,
+   provider:usedProvider||provider.value,
+   createdAt:serverTimestamp()
+  });
+ }catch(e){
+  console.error("Firestore save error:",e);
+ }
 }
 
-function showWelcome(){
-  log.innerHTML=`
-    <div class="welcome" id="welcome">
-      <img src="logo.png" alt="">
-      <h2>Привет! Я MrBon AI.</h2>
-      <p>Выбери Gemini, Claude или ChatGPT и начни разговор.</p>
-    </div>`;
+function updateModels(selectedProvider,preferred){
+ modelSelect.replaceChildren();
+ const list=MODELS[selectedProvider]||MODELS.gemini;
+ for(const item of list){
+  const option=document.createElement("option");
+  option.value=item.id;
+  option.textContent=item.name;
+  modelSelect.appendChild(option);
+ }
+ if(preferred&&list.some(x=>x.id===preferred)){
+  modelSelect.value=preferred;
+ }
 }
 
-function addMessage(text,role="model",options={}){
-  const row=document.createElement("div");
-  row.className="msg-row "+(role==="user"?"user":"assistant");
-  if(options.error)row.classList.add("error");
-
-  const avatar=document.createElement("div");
-  avatar.className="avatar";
-  avatar.textContent=role==="user"?"U":"M";
-
-  const content=document.createElement("div");
-  content.className="msg-content";
-
-  const bubble=document.createElement("div");
-  bubble.className="bubble";
-  bubble.textContent=text;
-
-  content.appendChild(bubble);
-
-  if(options.copy!==false && !options.typing){
-    const meta=document.createElement("div");
-    meta.className="msg-meta";
-
-    const label=document.createElement("span");
-    label.textContent=role==="user"?"Ты":"MrBon AI";
-
-    const copy=document.createElement("button");
-    copy.className="copybtn";
-    copy.type="button";
-    copy.textContent="Копировать";
-    copy.onclick=async()=>{
-      try{
-        await navigator.clipboard.writeText(text);
-        copy.textContent="Скопировано!";
-        setTimeout(()=>copy.textContent="Копировать",1200);
-      }catch{
-        copy.textContent="Не удалось";
-      }
-    };
-
-    meta.append(label,copy);
-    content.appendChild(meta);
-  }
-
-  row.append(avatar,content);
-  log.appendChild(row);
-  scrollBottom();
-
-  return {
-    setText(value){bubble.textContent=value;scrollBottom();},
-    setError(){row.classList.add("error");},
-    remove(){row.remove();}
-  };
+function getModel(){
+ return localStorage.getItem("mrbon_model_"+provider.value)||
+ MODELS[provider.value][0].id;
 }
 
-/* FIRESTORE */
-
-async function saveMessage(role,text){
-  if(!user)return;
-
-  try{
-    await addDoc(messagesCollection(),{
-      role,
-      text,
-      provider:getSelectedProvider(),
-      createdAt:serverTimestamp()
-    });
-  }catch(error){
-    console.error("Firestore save error:",error);
-  }
+function openSettings(){
+ settingsProvider.value=provider.value;
+ updateModels(settingsProvider.value,getModel());
+ keyInput.value=getKey(settingsProvider.value);
+ $("settingsStatus").textContent="";
+ dlg.showModal();
 }
+
+settingsProvider.addEventListener("change",()=>{
+ const p=settingsProvider.value;
+ updateModels(p,localStorage.getItem("mrbon_model_"+p));
+ keyInput.value=getKey(p);
+});
+
+$("settings").addEventListener("click",openSettings);
+
+$("save").addEventListener("click",()=>{
+ const p=settingsProvider.value;
+ const k=keyInput.value.trim();
+ try{
+  setKey(p,k);
+  localStorage.setItem("mrbon_model_"+p,modelSelect.value);
+  provider.value=p;
+  $("settingsStatus").textContent="Настройки сохранены.";
+  dlg.close();
+ }catch(e){
+  $("settingsStatus").textContent=e.message;
+ }
+});
+
+$("close").addEventListener("click",()=>dlg.close());
+
+provider.addEventListener("change",()=>{
+ if(!getKey())openSettings();
+});
+
+$("gbtn").addEventListener("click",async()=>{
+ $("msgerr").textContent="";
+ try{
+  await signInWithPopup(auth,new GoogleAuthProvider());
+ }catch(e){
+  $("msgerr").textContent="Не удалось войти: "+(e.code||e.message);
+ }
+});
+
+$("out").addEventListener("click",async()=>{
+ try{await signOut(auth)}
+ catch(e){addMessage("Ошибка выхода: "+e.message,"assistant",true)}
+});
 
 async function loadHistory(){
+ log.replaceChildren();
+ history=[];
+
+ try{
+  const snap=await getDocs(query(messagesCollection(),orderBy("createdAt","asc")));
+  snap.forEach(doc=>{
+   const m=doc.data();
+   if(typeof m.text!=="string")return;
+   const role=m.role==="user"?"user":"assistant";
+   history.push({role,content:m.text});
+   addMessage(m.text,role);
+  });
+ }catch(e){
+  console.error(e);
+  addMessage("Не удалось загрузить историю: "+e.message,"assistant",true);
+ }
+
+ if(!history.length){
+  addMessage("Привет, "+(user.displayName||"друг").split(" ")[0]+
+   "! Я MrBon AI. О чём поговорим?");
+ }
+}
+
+onAuthStateChanged(auth,async u=>{
+ user=u;
+ login.hidden=!!u;
+ appScreen.hidden=!u;
+
+ if(!u)return;
+
+ $("who").textContent=u.displayName||u.email||"Аккаунт";
+ provider.value=localStorage.getItem("mrbon_provider")||"gemini";
+
+ if(!MODELS[provider.value])provider.value="gemini";
+
+ await loadHistory();
+
+ if(!getKey())openSettings();
+});
+
+$("clear").addEventListener("click",async()=>{
+ if(!user)return;
+ if(!confirm("Удалить всю историю чата?"))return;
+
+ try{
+  const snap=await getDocs(messagesCollection());
+  const batch=writeBatch(db);
+  snap.forEach(doc=>batch.delete(doc.ref));
+  await batch.commit();
+
   history=[];
-  showWelcome();
-
-  try{
-    const snapshot=await getDocs(
-      query(messagesCollection(),orderBy("createdAt"))
-    );
-
-    snapshot.forEach(doc=>{
-      const data=doc.data();
-      if(typeof data.text!=="string")return;
-
-      const role=data.role==="user"?"user":"model";
-
-      history.push({
-        role,
-        parts:[{text:data.text}]
-      });
-
-      addMessage(data.text,role);
-    });
-
-    if(!history.length)showWelcome();
-
-  }catch(error){
-    console.error("History load error:",error);
-    addMessage("Не удалось загрузить историю: "+error.message,"model",{error:true});
-  }
-}
-
-/* LOGIN */
-
-$("gbtn").onclick=async()=>{
-  $("loginError").textContent="";
-  $("gbtn").disabled=true;
-
-  try{
-    await signInWithPopup(auth,google);
-  }catch(error){
-    console.error(error);
-    $("loginError").textContent="Ошибка входа: "+(error.code||error.message);
-  }finally{
-    $("gbtn").disabled=false;
-  }
-};
-
-async function logout(){
-  try{
-    if(controller)controller.abort();
-    await signOut(auth);
-  }catch(error){
-    console.error(error);
-  }
-}
-
-$("sideOut").onclick=logout;
-$("sideSettings").onclick=openSettings;
-$("settings").onclick=openSettings;
-$("mobileMenu").onclick=openSettings;
-
-onAuthStateChanged(auth,async currentUser=>{
-  const generation=++authGeneration;
-  user=currentUser;
-
-  $("login").hidden=!!currentUser;
-  $("app").hidden=!currentUser;
-
-  if(!currentUser){
-    history=[];
-    log.innerHTML="";
-    return;
-  }
-
-  $("who").textContent=currentUser.displayName||currentUser.email||"Пользователь";
-
-  await loadHistory();
-
-  if(generation!==authGeneration)return;
-
-  if(!getKey("gemini")&&!getKey("claude")&&!getKey("openai")){
-    openSettings();
-  }
+  log.replaceChildren();
+  addMessage("История очищена. О чём поговорим?");
+ }catch(e){
+  addMessage("Не удалось очистить историю: "+e.message,"assistant",true);
+ }
 });
-
-/* API KEY SETTINGS */
-
-$("saveKeys").onclick=()=>{
-  const values={
-    gemini:$("geminiKey").value.trim(),
-    claude:$("claudeKey").value.trim(),
-    openai:$("openaiKey").value.trim()
-  };
-
-  try{
-    for(const name of Object.keys(values)){
-      if(values[name]){
-        localStorage.setItem(KEY_NAMES[name],values[name]);
-      }else{
-        localStorage.removeItem(KEY_NAMES[name]);
-      }
-    }
-
-    // Remove old key after migration
-    localStorage.removeItem("mrbon_key");
-
-    setStatus("Ключи сохранены на этом устройстве.");
-    setTimeout(()=>dlg.close(),650);
-
-  }catch(error){
-    setStatus("Ошибка сохранения. Проверь настройки браузера.");
-    console.error(error);
-  }
-};
-
-$("cancel").onclick=()=>dlg.close();
-
-/* PROVIDER SWITCHING */
-
-providerSelect.addEventListener("change",()=>{
-  const name=PROVIDERS[getSelectedProvider()];
-  $("who").textContent=(user?.displayName||"Пользователь")+" · "+name;
-});
-
-/* THEME */
-
-$("theme").onclick=()=>{
-  document.body.classList.toggle("light");
-  localStorage.setItem(
-    "mrbon_theme",
-    document.body.classList.contains("light")?"light":"dark"
-  );
-};
-
-try{
-  if(localStorage.getItem("mrbon_theme")==="light"){
-    document.body.classList.add("light");
-  }
-}catch{}
-
-/* CLEAR CURRENT HISTORY */
-
-$("clear").onclick=async()=>{
-  if(!user)return;
-  if(!confirm("Удалить всю историю этого разговора?"))return;
-
-  try{
-    const snapshot=await getDocs(messagesCollection());
-    const docs=snapshot.docs;
-
-    for(let i=0;i<docs.length;i+=450){
-      const batch=writeBatch(db);
-      docs.slice(i,i+450).forEach(doc=>batch.delete(doc.ref));
-      await batch.commit();
-    }
-
-    history=[];
-    showWelcome();
-
-  }catch(error){
-    console.error(error);
-    alert("Не удалось очистить историю: "+error.message);
-  }
-};
-
-$("newChat").onclick=()=>{
-  if(history.length&&!confirm("Начать новый разговор? Текущая история будет удалена."))return;
-  $("clear").click();
-};
-
-/* INPUT */
 
 input.addEventListener("input",()=>{
-  input.style.height="auto";
-  input.style.height=Math.min(input.scrollHeight,180)+"px";
+ input.style.height="auto";
+ input.style.height=Math.min(input.scrollHeight,120)+"px";
 });
 
-input.addEventListener("keydown",event=>{
-  if(event.key==="Enter"&&!event.shiftKey){
-    event.preventDefault();
-    $("form").requestSubmit();
-  }
+input.addEventListener("keydown",e=>{
+ if(e.key==="Enter"&&!e.shiftKey){
+  e.preventDefault();
+  $("form").requestSubmit();
+ }
 });
 
-/* CHAT REQUEST */
+async function sendToAI(message){
+ const p=provider.value;
+ const apiKey=getKey(p);
+ const selectedModel=localStorage.getItem("mrbon_model_"+p)||
+ MODELS[p][0].id;
 
-async function requestAI(provider,key,message,chatHistory,idToken){
-  const response=await fetch(API,{
-    method:"POST",
-    headers:{
-      "Content-Type":"application/json",
-      "Authorization":"Bearer "+idToke
+ if(!apiKey){
+  openSettings();
+  throw new Error("Сначала добавь API-ключ для выбранного ИИ.");
+ }
+
+ const token=await user.getIdToken();
+
+ const recentHistory=history.slice(-30);
+
+ const response=await fetch(WORKER_URL,{
+  method:"POST",
+  headers:{
+   "Content-Type":"application/json",
+   "Authorization":"Bearer "+token
+  },
+  body:JSON.stringify({
+   provider:p,
+   apiKey:apiKey,
+   model:selectedModel,
+   message:message,
+   system:SYSTEM,
+   history:recentHistory
+  })
+ });
+
+ let data;
+ try{data=await response.json()}
+ catch(e){throw new Error("Worker вернул неправильный ответ")}
+
+ if(!response.ok){
+  const message=
+   data.error?.message||
+   data.error||
+   data.message||
+   "Ошибка сервера "+response.status;
+  throw new Error(typeof message==="string"?message:JSON.stringify(message));
+ }
+
+ if(data.success===false){
+  throw new Error(data.error?.message||data.error||"Ошибка ИИ");
+ }
+
+ const reply=data.reply||data.text||data.response;
+
+ if(typeof reply!=="string"||!reply.trim()){
+  throw new Error("ИИ вернул пустой ответ");
+ }
+
+ return reply;
+}
+
+$("form").addEventListener("submit",async e=>{
+ e.preventDefault();
+
+ if(sending||!user)return;
+
+ const message=input.value.trim();
+ if(!message)return;
+
+ if(!getKey()){
+  openSettings();
+  return;
+ }
+
+ sending=true;
+ send.disabled=true;
+
+ const activeProvider=provider.value;
+ localStorage.setItem("mrbon_provider",activeProvider);
+
+ input.value="";
+ input.style.height="auto";
+
+ addMessage(message,"user");
+ history.push({role:"user",content:message});
+ await saveMessage("user",message,activeProvider);
+
+ const waiting=addMessage("MrBon AI печатает…","assistant");
+
+ try{
+  const reply=await sendToAI(message);
+  waiting.textContent=reply;
+
+  history.push({role:"assistant",content:reply});
+  await saveMessage("assistant",reply,activeProvider);
+
+ }catch(e){
+  history.pop();
+  waiting.textContent="Не удалось получить ответ: "+e.message;
+  waiting.classList.add("err");
+ }finally{
+  sending=false;
+  send.disabled=false;
+  input.focus();
+  log.scrollTop=log.scrollHeight;
+ }
+});
+</script>
+</body>
+</html>
